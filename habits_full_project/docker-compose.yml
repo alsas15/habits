@@ -1,0 +1,38 @@
+version: '3.8'
+services:
+  db:
+    image: postgres:15
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: habitsdb
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  backend:
+    build: ./backend
+    environment:
+      - DATABASE_URL=postgresql+psycopg2://postgres:postgres@db:5432/habitsdb
+      - SECRET_KEY=supersecretkey
+      - ALLOWED_WINDOW_START=08:00
+      - ALLOWED_WINDOW_END=22:00
+      - TIMEZONE=Europe/Sofia
+    depends_on:
+      - db
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend/app:/app/app
+
+  bot:
+    build: ./bot
+    environment:
+      - TELEGRAM_BOT_TOKEN=${TELEGRAM_BOT_TOKEN}
+      - BACKEND_URL=http://backend:8000
+    depends_on:
+      - backend
+
+volumes:
+  pgdata:

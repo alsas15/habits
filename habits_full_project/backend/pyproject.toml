@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "habits-backend"
+version = "0.1.0"
+description = "Habits FastAPI backend for assignment"
+authors = ["Author <you@example.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.12"
+fastapi = "^0.100.0"
+uvicorn = {extras = ["standard"], version = "^0.23.0"}
+SQLAlchemy = "^2.0.30"
+psycopg2-binary = "^2.9.7"
+alembic = "^1.12.0"
+pydantic = "^1.10.11"
+python-dotenv = "^1.0.1"
+PyJWT = "^2.8.0"
+APScheduler = "^3.10.1"
+pytz = "^2024.1"
+
+[tool.poetry.dev-dependencies]
+pytest = "^7.4.0"
